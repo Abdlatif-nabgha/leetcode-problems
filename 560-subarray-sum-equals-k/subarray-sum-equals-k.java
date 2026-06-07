@@ -4,15 +4,15 @@ class Solution {
         int length = nums.length;
         int totalNumberSubArrays = 0;
 
-        // brute force solution
-        for (int i = 0; i < length; i++) {
-            int sum = 0;
-            for (int j = i; j < length; j++) {
-                sum += nums[j];
-                if (sum == k) {
-                    totalNumberSubArrays++;
-                }
-            }
+        Map<Integer, Integer> prefixCount = new HashMap<>();
+        prefixCount.put(0, 1); // somme 0 vue 1 fois (avant de commencer)
+    
+        int sum = 0;
+
+        for (int num : nums) {
+            sum += num;
+            totalNumberSubArrays += prefixCount.getOrDefault(sum - k, 0);
+            prefixCount.merge(sum, 1, Integer::sum);
         }
         return totalNumberSubArrays;
     }
