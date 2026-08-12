@@ -1,20 +1,23 @@
 class Solution {
-    public int[] productExceptSelf(int[] nums) {
+    public static int[] productExceptSelf(int arr[]) {
+        // code here
+        int length = arr.length;
+        int[] res = new int[length];
         
-        int n = nums.length;
-        int[] answer = new int[n];
-
-        answer[0] = 1;
-        for (int i = 1; i < n; i++) {
-            answer[i] = nums[i-1] * answer[i-1];
+        int coef = 1;
+        
+        for (int i = 0; i < length; i++) {
+            res[i] = coef;
+            coef *= arr[i];
         }
-
-        int rightCoef = 1;
-        for (int i = n-1; i >= 0; i--) {
-            answer[i] = answer[i] * rightCoef;
-            rightCoef *= nums[i];
+        
+        // loop backward 
+        coef = 1;
+        for (int i = length - 1; i >= 0; i--) {
+            res[i] *= coef;
+            coef *= arr[i];
         }
-
-        return answer;
+        
+        return res;
     }
 }
