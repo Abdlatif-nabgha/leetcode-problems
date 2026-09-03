@@ -3,13 +3,13 @@ class Solution {
         
         Set<Character> set = new HashSet<>();
 
-        int l = 0, maxLen = 0;
+        int l = 0, maxLen = 0, length = s.length();
 
-        for (int r = 0; r < s.length(); r++) {
+        for (int r = 0; r < length; r++) {
 
             char current = s.charAt(r);
 
-            while (set.contains(current)) {
+            while (set.contains(current)) { // abcbcbb
                 set.remove(s.charAt(l));
                 l++;
             }
