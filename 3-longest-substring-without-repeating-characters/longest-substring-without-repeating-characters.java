@@ -1,21 +1,24 @@
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        
-        Set<Character> set = new HashSet<>();
+        // Tracks the last seen index of each ASCII character (initialized to -1)
+        int[] lastSeen = new int[128];
+        java.util.Arrays.fill(lastSeen, -1);
 
-        int l = 0, maxLen = 0, length = s.length();
+        int maxLen = 0;
+        int l = 0;
 
-        for (int r = 0; r < length; r++) {
-
+        for (int r = 0; r < s.length(); r++) {
             char current = s.charAt(r);
 
-            while (set.contains(current)) { // abcbcbb
-                set.remove(s.charAt(l));
-                l++;
+            // If the character was seen inside the current window, jump 'l' past it
+            if (lastSeen[current] >= l) {
+                l = lastSeen[current] + 1;
             }
 
-            set.add(current);
+            // Update the last seen index of the current character
+            lastSeen[current] = r;
 
+            // Calculate max length
             maxLen = Math.max(maxLen, r - l + 1);
         }
 
